@@ -1,4 +1,4 @@
-from couponCode import CouponCode
+from .couponCode import CouponCode
 
 class CouponCodeService:
     def __init__(self):
@@ -14,14 +14,14 @@ class CouponCodeService:
 
         coupon = self.coupons[code]
 
-        if not coupon.can_user_use(user_id):
-            return False, "User total repeat count reached"
-        if not coupon.can_user_use_daily(user_id):
-            return False, "User daily repeat count reached"
-        if not coupon.can_user_use_weekly(user_id):
-            return False, "User weekly repeat count reached"
-        if not coupon.can_global_use():
-            return False, "Global total repeat count reached"
+        if not coupon.user_validity_by_total_count(user_id):
+            return False, "User total limit reached"
+        if not coupon.user_validity_by_daily_limit(user_id):
+            return False, "User daily limit reached"
+        if not coupon.user_validity_by_weekly_limit(user_id):
+            return False, "User weekly limit reached"
+        if not coupon.validity_by_global_limit():
+            return False, "Global limit reached"
 
         return True, "Coupon is valid"
 
@@ -35,3 +35,11 @@ class CouponCodeService:
         coupon.update_usage_counts(user_id)
 
         return True, "Coupon applied successfully"
+
+    def coupon_details(self, code):
+        if code in self.coupons:
+            coupon = self.coupons[code]
+            return coupon.coupon_to_dict()
+        return {
+            "error": "Coupon does not exist"
+        }
