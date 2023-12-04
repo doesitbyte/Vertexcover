@@ -16,11 +16,15 @@ class CouponCode:
         self.global_usage_count = 0
 
     def user_validity_by_total_count(self, user_id: str) -> bool:
+        if self.user_total_repeat_count <= 0:
+            return False
         if user_id in self.user_usage_count and self.user_usage_count[user_id] >= self.user_total_repeat_count:
             return False
         return True
 
     def user_validity_by_daily_limit(self, user_id: str) -> bool:
+        if self.user_per_day_repeat_count <= 0:
+            return False
         if user_id in self.user_usage_count and self.user_usage_count[user_id] >= self.user_per_day_repeat_count:
             last_coupon_use_datetime = self.user_usage_datetime[user_id][-self.user_per_day_repeat_count]
             daily_first_use_timediff = (datetime.datetime.now() - last_coupon_use_datetime).total_seconds()
@@ -29,6 +33,8 @@ class CouponCode:
         return True
 
     def user_validity_by_weekly_limit(self, user_id: str) -> bool:
+        if self.user_per_week_repeat_count <= 0:
+            return False
         if user_id in self.user_usage_count and self.user_usage_count[user_id] >= self.user_per_week_repeat_count:
             last_coupon_use_datetime = self.user_usage_datetime[user_id][-self.user_per_week_repeat_count]
             weekly_first_use_timediff = (datetime.datetime.now() - last_coupon_use_datetime).total_seconds()
@@ -37,6 +43,8 @@ class CouponCode:
         return True
 
     def validity_by_global_limit(self) -> bool:
+        if self.user_total_repeat_count <= 0:
+            return False
         if self.global_usage_count >= self.global_total_repeat_count:
             return False
         return True

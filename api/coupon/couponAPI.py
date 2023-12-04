@@ -8,14 +8,17 @@ coupon_service = CouponCodeService()
 @couponBlueprint.route("/add", methods=["POST"])
 def add_coupon():
     data = request.json
-    coupon_service.add_coupon(
-        data['code'],
-        data['user_total_repeat_count'],
-        data['user_per_day_repeat_count'],
-        data['user_per_week_repeat_count'],
-        data['global_total_repeat_count']
-    )
-    return jsonify({'message': 'Coupon added successfully'}), 201
+    try:
+        coupon_service.add_coupon(
+            data['code'],
+            data['user_total_repeat_count'],
+            data['user_per_day_repeat_count'],
+            data['user_per_week_repeat_count'],
+            data['global_total_repeat_count']
+        )
+        return jsonify({'message': 'Coupon added successfully'}), 201
+    except:
+        return jsonify({'message': 'Coupon not added successfully. Please make sure the input data is correct.'}), 500
 
 
 @couponBlueprint.route("/validate", methods=["POST"])
