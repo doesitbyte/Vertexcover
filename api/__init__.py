@@ -14,12 +14,12 @@ def init_app():
             "code": 200,
             "status": "online",
             "ping": time.time() - startTime,
-            "serverDateTime": datetime.now().strftime(),
+            "serverDateTime": datetime.now().strftime("%d/%m/%Y, %H:%M:%S"),
         }
 
-    # with app.app_context():
-    #     from .coupon import couponAPI
+    with app.app_context():
+        from .coupon import couponAPI
 
-    #     app.register_blueprint(coupon.customerBlueprint, url_prefix="/coupon")
+        app.register_blueprint(couponAPI.couponBlueprint, url_prefix="/coupon")
 
     return app
