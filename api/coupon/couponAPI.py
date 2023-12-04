@@ -4,7 +4,6 @@ from .couponCodeService import CouponCodeService
 couponBlueprint = Blueprint("coupon", __name__)
 
 coupon_service = CouponCodeService()
-print("Initilialized coupon code service")
 
 @couponBlueprint.route("/add", methods=["POST"])
 def add_coupon():
