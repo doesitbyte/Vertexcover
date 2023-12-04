@@ -7,6 +7,14 @@ def init_app():
     app = Flask(__name__)
     CORS(app)
 
+    @app.route("/", methods=["GET"])
+    def root():
+        
+        return {
+            "msg": "Vertexcover take home assignment",
+            "code": 200
+        }
+
     @app.route("/status", methods=["GET"])
     def checkServerStatus():
         startTime = time.time()
