@@ -1,5 +1,4 @@
-from flask import Blueprint, request
-from api import db
+from flask import Blueprint
 
 couponBlueprint = Blueprint("coupon", __name__)
 
