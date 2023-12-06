@@ -1,5 +1,4 @@
-# Vertexcover Assignment
-This is my solution for the Vertexcover take home assignment.  
+Coupon Management  
 Deployed at: https://vertexcover-216ec2f7cbaa.herokuapp.com/
 
 Repo links:
